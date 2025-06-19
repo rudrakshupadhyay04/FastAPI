@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from typing import Optional
 app = FastAPI()
 
 @app.get('/')
@@ -17,3 +17,10 @@ def index(id: int):
 @app.get('/blog/{id}/comment')
 def index(id):
     return {"user_id": id}
+
+@app.get('/blog_page')   #http://127.0.0.1:8000/blog_page?limit=10&published=true&sort=latest
+def get_blog(limit, published: bool, sort: Optional[str] = None):
+    if published:
+        return {"data": f"{limit} published blogs are there"}
+    else:
+        return {"data": f"{limit} unpublished blogs are there "}
