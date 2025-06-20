@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from typing import Optional
+from pydantic import BaseModel
 app = FastAPI()
 
 @app.get('/')
@@ -24,3 +25,14 @@ def get_blog(limit, published: bool, sort: Optional[str] = None):
         return {"data": f"{limit} published blogs are there"}
     else:
         return {"data": f"{limit} unpublished blogs are there "}
+
+
+# learning request body
+class Blog(BaseModel):
+    title: str
+    body: str
+    published: Optional[bool] | None = None
+
+@app.post('/blog')
+def create_blog(blog:Blog):
+    return {"data": f'blog is creted with title as a {blog.title}'}
