@@ -1,9 +1,10 @@
-from fastapi import FastAPI
-from . import schema
+from fastapi import FastAPI # type: ignore
+from . import schema, models
+from .database import engine
 
 
 app = FastAPI()
-
+models.Base.metadata.create_all(engine)
 
 
 
